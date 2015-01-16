@@ -11,7 +11,7 @@
 namespace AppBundle\Form\Type;
 
 /**
- * Class PhotoType
+ * Class ParticipantType
  * 
  * @category SymfonyBundle
  * @package  AppBundle\Form\Type
@@ -21,21 +21,26 @@ namespace AppBundle\Form\Type;
  */
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-class PhotoType extends AbstractType
+class ParticipantType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('title', 'text', array('label' => 'Title'))
-            ->add('photo', 'file', array('label' => 'Photo'))
-            ->add('creator', 'text')
-            ->add('save', 'submit')
+            ->add('email', 'text')
             ;
+    }
+
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    {
+        $resolver->setDefaults(array(
+                'data_class' => 'AppBundle\Entity\Participant',
+            ));
     }
 
     public function getName()
     {
-        return 'photo';
+        return 'participant';
     }
 }

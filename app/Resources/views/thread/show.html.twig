@@ -1,0 +1,10 @@
+<h1>{{ thread.title }}</h1>
+<h2>Created by: {{ thread.getCreatedBy.getEmail }}</h2>
+{{ form_start(addContentForm, {'action': path('add_content_thread'), 'method': 'POST'}) }}
+<input type="hidden" name="thread_hash" value="{{ thread.hash }}" />
+{{ form_end(addContentForm) }}
+<ul>
+    {% for content in thread.getContents %}
+        <li><img src="http://{{ aws_base_url }}/{{content.url}}" alt="image"/></li>
+    {% endfor %}
+</ul>
