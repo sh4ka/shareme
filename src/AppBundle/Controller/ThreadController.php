@@ -52,8 +52,30 @@ class ThreadController extends Controller
      * @Route("/add-content", name="add_content_thread")
      */
     public function addContentToThreadAction(Request $request){
+        $contentForm = $this->createForm(new AddContentType(), array());
         $thread = $this->getDoctrine()->getRepository('AppBundle:Thread')->findOneBy(array('hash' => $request->get('thread_hash')));
-        if($thread){
+         if($thread && $request->isMethod('POST')){
+            // get new content to be added to thread
+            $contentForm->submit($request);
+            if ($contentForm->isValid()) {
+                $contentData = $contentForm->getData();
+                $filehash = hash_file('sha1', $_FILES['add_content']['tmp_name']['photo']);
+                $content = $this->getDoctrine()->getRepository('AppBundle:Content')->findOneBy(array('hash' => $filehash));
+                if($content == null){
+                    $url = $this->getPhotoUploader()->upload($contentData['photo']);
+                    $content = new Content();
+                    $content->setUrl($url);
+                    $content->setHash($filehash);
+                }
+                if($content->getUrl()){
+                    $hash = $thread->getHash();
+                    $thread->addContent($content);
+                    $em = $this->getDoctrine()->getManager();
+                    $em->persist($thread);
+                    $em->flush();
+                    return $this->redirect('/thread/'.$hash);
+                }
+            }
         }
         return $thread;
     }
@@ -118,6 +140,6 @@ class ThreadController extends Controller
      */
     protected function getPhotoUploader()
     {
-        return $this->get('acme_storage.photo_uploader');
+        return $this->get('shareme_storage.photo_uploader');
     }
 } 

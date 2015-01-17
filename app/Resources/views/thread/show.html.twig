@@ -5,6 +5,6 @@
 {{ form_end(addContentForm) }}
 <ul>
     {% for content in thread.getContents %}
-        <li><img src="http://{{ aws_base_url }}/{{content.url}}" alt="image"/></li>
+        <li><img src="{{ aws_base_url }}/{{content.url}}" alt="image"/></li>
     {% endfor %}
 </ul>

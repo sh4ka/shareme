@@ -2,17 +2,16 @@
 # http://symfony.com/doc/current/book/service_container.html
 parameters:
 #    parameter_name: value
-    acme_storage.amazon_s3.class: AmazonS3
 
 services:
 #    service_name:
 #        class: AppBundle\Directory\ClassName
 #        arguments: ["@another_service_name", "plain_value", "%parameter_name%"]
 
-    acme_storage.amazon_s3:
-        class: %acme_storage.amazon_s3.class%
+    shareme_storage.amazon_s3:
+        class: AmazonS3
         arguments: [["%amazon_s3.aws_key%", "%amazon_s3.aws_secret_key%"]]
 
-    acme_storage.photo_uploader:
+    shareme_storage.photo_uploader:
         class: AppBundle\Upload\PhotoUploader
         arguments: ["@photo_storage_filesystem"]
