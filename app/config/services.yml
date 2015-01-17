@@ -10,7 +10,7 @@ services:
 
     shareme_storage.amazon_s3:
         class: AmazonS3
-        arguments: [["%amazon_s3.aws_key%", "%amazon_s3.aws_secret_key%"]]
+        arguments: [["%shareme_storage.amazon_s3.aws_key%", "%shareme_storage.amazon_s3.aws_secret_key%"]]
 
     shareme_storage.photo_uploader:
         class: AppBundle\Upload\PhotoUploader

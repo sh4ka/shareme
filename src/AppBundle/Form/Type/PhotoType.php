@@ -28,8 +28,8 @@ class PhotoType extends AbstractType
     {
         $builder
             ->add('title', 'text', array('label' => 'Title'))
-            ->add('photo', 'file', array('label' => 'Photo'))
-            ->add('creator', 'text')
+            ->add('photo', 'file', array('label' => 'Picture'))
+            ->add('creator', 'email', array('label' => 'Owner email'))
             ->add('save', 'submit')
             ;
     }

@@ -1,0 +1,5 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+    {% include 'headTitle.html.twig' with {'headTitle': 'Create submission'} %}
+{{form(contentForm)}}
+{% endblock %}

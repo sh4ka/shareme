@@ -28,7 +28,7 @@ class AddContentType extends AbstractType
     {
         $builder
             ->add('photo', 'file', array('label' => 'Photo', 'mapped' => 'false'))
-            ->add('save', 'submit')
+            ->add('Submit', 'submit')
         ;
     }
 

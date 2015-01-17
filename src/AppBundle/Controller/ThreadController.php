@@ -69,8 +69,6 @@ class ThreadController extends Controller
                     $content->setHash($filehash);
                 }
                 if($content->getUrl()){
-                    $hash = $thread->getHash();
-
                     $submission = new Submission();
                     $submission->setContent($content);
                     $submission->setThread($thread);
@@ -82,11 +80,11 @@ class ThreadController extends Controller
                     $em->persist($content);
                     $em->persist($submission);
                     $em->flush();
-                    return $this->redirect('/thread/'.$hash);
+                    return $this->redirect('/thread/'.$thread->getHash());
                 }
             }
         }
-        return $thread;
+        return $this->redirect('/thread/'.$thread->getHash());
     }
 
     /**
@@ -145,7 +143,7 @@ class ThreadController extends Controller
         }
 
         return $this->render(
-            'photo/create.html.twig',
+            'thread/create.html.twig',
             array(
                 'contentForm'  => $contentForm->createView(),
                 'url' => $url
