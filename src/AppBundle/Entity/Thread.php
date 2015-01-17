@@ -58,14 +58,13 @@ class Thread
     private $participants;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Content", inversedBy="threads", cascade={"persist"})
-     * @ORM\JoinTable(name="threads_contents")
+     * @ORM\OneToMany(targetEntity="Submission", mappedBy="thread", cascade={"persist", "remove"}, orphanRemoval=TRUE)
      **/
-    private $contents;
+    private $submissions;
 
     public function __construct() {
         $this->participants = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->contents = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->submissions = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
 
@@ -158,20 +157,29 @@ class Thread
         }
     }
 
-    /**
-     * @return \Doctrine\Common\Collections\ArrayCollection
-     */
-    public function getContents(){
-        return $this->contents;
+    public function getSubmissions()
+    {
+        return $this->submissions->toArray();
     }
 
-    /**
-     * @param Content $content
-     */
-    public function addContent(Content $content){
-        if(!$this->contents->contains($content)){
-            $this->contents->add($content);
+    public function addSubmission(Submission $submission)
+    {
+        if (!$this->submissions->contains($submission)) {
+            $this->submissions->add($submission);
+            $submission->setThread($this);
         }
+
+        return $this;
+    }
+
+    public function removeSubmission(Submission $submission)
+    {
+        if ($this->submissions->contains($submission)) {
+            $this->submissions->removeElement($submission);
+            $submission->setThread(null);
+        }
+
+        return $this;
     }
 
     /**
@@ -219,5 +227,7 @@ class Thread
         $this->participants = $participants;
         return $this;
     }
+
+
 
 }

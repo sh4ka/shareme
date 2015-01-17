@@ -36,12 +36,12 @@ class Content
     private $hash;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Thread", mappedBy="contents")
-     **/
-    private $threads;
+     * @ORM\OneToMany(targetEntity="Submission", mappedBy="content", cascade={"persist", "remove"}, orphanRemoval=TRUE)
+     */
+    protected $submissions;
 
     public function __construct() {
-        $this->threads = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->submissions = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -100,26 +100,18 @@ class Content
         return $this;
     }
 
-    /**
-     * <description>
-     *
-     * @return mixed
-     */
-    public function getThreads()
+    public function getSubmissions()
     {
-        return $this->threads;
+        return $this->submissions->toArray();
     }
 
-    /**
-     * <description>
-     *
-     * @param mixed $threads <param_description>
-     *
-     * @return $this
-     */
-    public function setThreads($threads)
+    public function addSubmission(Submission $submission)
     {
-        $this->threads = $threads;
+        if (!$this->submissions->contains($submission)) {
+            $this->submissions->add($submission);
+            $submission->setContent($this);
+        }
+
         return $this;
     }
 }

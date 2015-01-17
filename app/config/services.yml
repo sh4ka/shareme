@@ -15,3 +15,8 @@ services:
     shareme_storage.photo_uploader:
         class: AppBundle\Upload\PhotoUploader
         arguments: ["@photo_storage_filesystem"]
+
+    shareme.arrayReverse_extension:
+            class: AppBundle\Twig\ArrayReverseExtension
+            tags:
+                - { name: twig.extension }

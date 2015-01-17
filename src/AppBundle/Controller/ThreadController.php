@@ -12,6 +12,7 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\Content;
 use AppBundle\Entity\Participant;
+use AppBundle\Entity\Submission;
 use AppBundle\Entity\Thread;
 use AppBundle\Form\Type\AddContentType;
 use AppBundle\Form\Type\PhotoType;
@@ -69,9 +70,17 @@ class ThreadController extends Controller
                 }
                 if($content->getUrl()){
                     $hash = $thread->getHash();
-                    $thread->addContent($content);
+
+                    $submission = new Submission();
+                    $submission->setContent($content);
+                    $submission->setThread($thread);
+                    $submission->setDateAdded(new \DateTime());
+                    $thread->addSubmission($submission);
+
                     $em = $this->getDoctrine()->getManager();
                     $em->persist($thread);
+                    $em->persist($content);
+                    $em->persist($submission);
                     $em->flush();
                     return $this->redirect('/thread/'.$hash);
                 }
@@ -108,7 +117,6 @@ class ThreadController extends Controller
                     $thread->setHash($hash);
                     $thread->setTitle($contentData['title']);
                     $thread->setCreatedAt(new \DateTime());
-                    $thread->addContent($content);
                     // find if participant exists
                     $em = $this->getDoctrine()->getManager();
                     $participant = $this->getDoctrine()->getRepository('AppBundle:Participant')->findOneBy(array('email' => $contentData['creator']));
@@ -118,7 +126,17 @@ class ThreadController extends Controller
                     }
                     $thread->addParticipant($participant);
                     $thread->setCreatedBy($participant);
+
+                    $submission = new Submission();
+                    $submission->setContent($content);
+                    $submission->setThread($thread);
+                    $submission->setDateAdded(new \DateTime());
+                    $thread->addSubmission($submission);
+                    $content->addSubmission($submission);
+
                     $em->persist($thread);
+                    $em->persist($content);
+                    $em->persist($submission);
                     $em->flush();
 
                     return $this->redirect('/thread/'.$hash);
