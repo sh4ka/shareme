@@ -12,7 +12,7 @@ namespace AppBundle\Form\Type;
 
 /**
  * Class PhotoType
- * 
+ *
  * @category SymfonyBundle
  * @package  AppBundle\Form\Type
  * @author   Jesús Flores <jesus.flores@bq.com>

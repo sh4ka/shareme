@@ -18,3 +18,7 @@ parameters:
 
     # A secret key that's used to generate certain security-related tokens
     secret:            ThisTokenIsNotSoSecretChangeIt
+
+    amazon_s3_bucket_name: bucketName
+    shareme_storage.amazon_s3.aws_key: key
+    shareme_storage.amazon_s3.aws_secret_key: key
