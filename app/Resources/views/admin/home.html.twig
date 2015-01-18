@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+    {% include 'headTitle.html.twig' with {'headTitle': 'Pending reviews'} %}
+    <div class="row">
+        <div class="col-sm-8 shareme-main">
+            <table class="table table-striped">
+                <tr>
+                    <th>#</th>
+                    <th>Picture</th>
+                    <th>Owner</th>
+                    <th>Ban</th>
+                </tr>
+                {% for submission in submissions %}
+                    <tr>
+                        <td>1</td>
+                        <td>{{ submission.getUrl }}</td>
+                        <td>{{ submission.getOwner }}</td>
+                        <td><button type="button" class="btn btn-danger btn-ban-submission" data-submission-id="{{ submission.id }}">Ban</button></td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+        <div class="col-sm-3 col-sm-offset-1 shareme-sidebar">
+            <div class="sidebar-module sidebar-module-inset">
+                <h4>Tools</h4>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block javascripts %}
+    <script src="/js/admin.js"></script>
+{% endblock %}
