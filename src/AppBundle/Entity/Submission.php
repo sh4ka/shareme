@@ -31,7 +31,7 @@ class Submission
     /**
      * @var boolean
      *
-     * @ORM\COlumn(name="banned", type="boolean")
+     * @ORM\COlumn(name="banned", type="boolean", nullable=TRUE)
      */
     private $banned;
 

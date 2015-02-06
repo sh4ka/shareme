@@ -3,7 +3,7 @@ app:
     type:     annotation
 
 admin:
-    resource: "@AppBundle/Controller/"
+    resource: "@AppBundle/Controller/AdminController.php"
     type:     annotation
     prefix:   /admin
 
