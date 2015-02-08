@@ -26,8 +26,8 @@
         <div class="shareme-masthead">
             <div class="container">
                 <nav class="shareme-nav">
-                    <a class="shareme-nav-item active" href="#">Home</a>
-                    <a class="shareme-nav-item" href="{{ url('create') }}">New thread</a>
+                    <a class="shareme-nav-item active" data-section="home" href="/">Home</a>
+                    <a class="shareme-nav-item" data-section="create" href="{{ url('create') }}">New thread</a>
                 </nav>
             </div>
         </div>
@@ -47,6 +47,7 @@
         <!-- Placed at the end of the document so the pages load faster -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+        <script src="/js/navbar-sections.js"></script>
         {% block javascripts %}{% endblock %}
     </body>
 </html>
